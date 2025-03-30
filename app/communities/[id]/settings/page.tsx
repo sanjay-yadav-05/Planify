@@ -58,7 +58,7 @@ export default function CommunitySettingsPage() {
             description: "You don't have permission to manage this community",
             variant: "destructive",
           })
-          router.push(`/communities/67e9483ee87df10ca9ad692c`)
+          // router.push(`/communities/67e9483ee87df10ca9ad692c`)
           // router.push(`/communities/${id}`)
         }
       } catch (error) {

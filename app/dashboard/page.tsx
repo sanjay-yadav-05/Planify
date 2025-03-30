@@ -60,7 +60,7 @@ export default function DashboardPage() {
       </div>
 
       <Tabs defaultValue="communities" className="space-y-4">
-        <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <TabsList className="grid grid-cols-2 md:grid-cols-3 gap-2">
           <TabsTrigger value="communities" className="gap-2">
             <Users className="h-4 w-4" />
             Communities
@@ -73,10 +73,10 @@ export default function DashboardPage() {
             <Calendar className="h-4 w-4" />
             Events
           </TabsTrigger>
-          <TabsTrigger value="tasks" className="gap-2">
+          {/* <TabsTrigger value="tasks" className="gap-2">
             <ClipboardList className="h-4 w-4" />
             Tasks
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
         <TabsContent value="communities" className="space-y-4">
           <DashboardCommunities />
@@ -87,9 +87,9 @@ export default function DashboardPage() {
         <TabsContent value="events" className="space-y-4">
           <DashboardEvents />
         </TabsContent>
-        <TabsContent value="tasks" className="space-y-4">
+        {/* <TabsContent value="tasks" className="space-y-4">
           <DashboardTasks />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   )
