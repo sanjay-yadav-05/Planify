@@ -32,27 +32,34 @@ export default function CommunitySettingsPage() {
     }
 
     const fetchCommunity = async () => {
+      
       try {
-        const response = await fetch(`/api/communities/${id}`)
+        // const response = await fetch(`/api/communities/${id}`)
+        const response = await fetch(`/api/communities/67e9483ee87df10ca9ad692c`)
+        // console.log("1")
         if (!response.ok) {
           throw new Error("Failed to fetch community")
         }
 
         const data = await response.json()
         setCommunity(data)
-        setName(data.name || "")
-        setDescription(data.description || "")
-        setInviteCode(data.inviteCode || "")
-
+        // setName(data.name || "")
+        // setDescription(data.description || "")
+        // setInviteCode(data.inviteCode || "")
+        setName(data.name || "new")
+        setDescription(data.description || "des")
+        setInviteCode(data.inviteCode || "code")
         // Check if user is admin
-        const member = data.members.find((m: any) => m.userId === user.id)
+        // const member = data.members.find((m: any) => m.userId === user.id)
+        const member = data.members?.find((m: any) => m.userId === user.id)
         if (!member || member.role !== "admin") {
           toast({
             title: "Access denied",
             description: "You don't have permission to manage this community",
             variant: "destructive",
           })
-          router.push(`/communities/${id}`)
+          router.push(`/communities/67e9483ee87df10ca9ad692c`)
+          // router.push(`/communities/${id}`)
         }
       } catch (error) {
         console.error("Error fetching community:", error)
@@ -75,7 +82,8 @@ export default function CommunitySettingsPage() {
     setSaving(true)
 
     try {
-      const response = await fetch(`/api/communities/${id}`, {
+      // const response = await fetch(`/api/communities/${id}`, {
+      const response = await fetch(`/api/communities/67e9483ee87df10ca9ad692c`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +119,8 @@ export default function CommunitySettingsPage() {
 
   const regenerateInviteCode = async () => {
     try {
-      const response = await fetch(`/api/communities/${id}/regenerate-invite`, {
+      // const response = await fetch(`/api/communities/${id}/regenerate-invite`, {
+      const response = await fetch(`/api/communities/67e9483ee87df10ca9ad692c/regenerate-invite`, {
         method: "POST",
       })
 
@@ -151,7 +160,8 @@ export default function CommunitySettingsPage() {
     }
 
     try {
-      const response = await fetch(`/api/communities/${id}`, {
+      // const response = await fetch(`/api/communities/${id}`, {
+      const response = await fetch(`/api/communities/67e9483ee87df10ca9ad692c`, {
         method: "DELETE",
       })
 

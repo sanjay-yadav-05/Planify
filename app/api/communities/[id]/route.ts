@@ -3,7 +3,8 @@ import { getCommunityById, updateCommunity, deleteCommunity } from "@/lib/db"
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const community = await getCommunityById(params.id)
+    const community = await getCommunityById("67e9483ee87df10ca9ad692c")
+    // const community = await getCommunityById(params.id)
 
     if (!community) {
       return NextResponse.json({ error: "Community not found" }, { status: 404 })

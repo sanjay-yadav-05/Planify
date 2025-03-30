@@ -29,7 +29,8 @@ export default function CommunityPage() {
 
     const fetchCommunity = async () => {
       try {
-        const response = await fetch(`/api/communities/${id}`)
+        // const response = await fetch(`/api/communities/${id}`)
+        const response = await fetch(`/api/communities/67e9483ee87df10ca9ad692c`)
         if (!response.ok) {
           throw new Error("Failed to fetch community")
         }

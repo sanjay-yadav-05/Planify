@@ -112,7 +112,8 @@ export default function DashboardCommunities() {
                   <Button variant="outline">View</Button>
                 </Link>
                 {community.role === "admin" && (
-                  <Link href={`/communities/${community.id}/settings`}>
+                  // <Link href={`/communities/${community.id}/settings`}>
+                  <Link href={`/communities/67e9483ee87df10ca9ad692c/settings`}>
                     <Button variant="outline" className="gap-2">
                       <Settings className="h-4 w-4" />
                       Manage
