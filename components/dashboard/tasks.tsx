@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -7,7 +8,10 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Calendar, ClipboardList, PlusCircle } from "lucide-react"
 import Link from "next/link"
 import { useAuth } from "@/hooks/use-auth"
-import { useState } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 
 // Mock data for tasks
 const mockTasks = [
@@ -48,6 +52,18 @@ export default function DashboardTasks() {
   const [tasks, setTasks] = useState(mockTasks)
   const [filter, setFilter] = useState("all")
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    dueDate: "",
+    event: "",
+    club: "",
+    status: "pending",
+    priority: "medium",
+  })
+
+  const handleCreateDialogOpen = () => setCreateDialogOpen(true)
+  const handleCreateDialogClose = () => setCreateDialogOpen(false)
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === "all") return true
@@ -59,16 +75,29 @@ export default function DashboardTasks() {
 
   const toggleTaskStatus = (taskId: string) => {
     setTasks(
-      tasks.map((task) => {
-        if (task.id === taskId) {
-          return {
-            ...task,
-            status: task.status === "pending" ? "completed" : "pending",
-          }
-        }
-        return task
-      }),
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, status: task.status === "pending" ? "completed" : "pending" } : task
+      )
     )
+  }
+
+  const handleCreateTask = () => {
+    if (!newTask.title || !newTask.description || !newTask.dueDate || !newTask.event || !newTask.club) {
+      alert("All fields are required!")
+      return
+    }
+
+    setTasks([...tasks, { ...newTask, id: `task-${tasks.length + 1}` }])
+    setNewTask({
+      title: "",
+      description: "",
+      dueDate: "",
+      event: "",
+      club: "",
+      status: "pending",
+      priority: "medium",
+    })
+    handleCreateDialogClose()
   }
 
   return (
@@ -76,7 +105,7 @@ export default function DashboardTasks() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="text-2xl font-bold">Your Tasks</h2>
         <div className="flex gap-2">
-          <Button className="gap-2" onClick={() => setCreateDialogOpen(true)}>
+          <Button className="gap-2" onClick={handleCreateDialogOpen}>
             <PlusCircle className="h-4 w-4" />
             Create Task
           </Button>
@@ -84,18 +113,10 @@ export default function DashboardTasks() {
             <Button variant={filter === "all" ? "default" : "outline"} size="sm" onClick={() => setFilter("all")}>
               All
             </Button>
-            <Button
-              variant={filter === "pending" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter("pending")}
-            >
+            <Button variant={filter === "pending" ? "default" : "outline"} size="sm" onClick={() => setFilter("pending")}>
               Pending
             </Button>
-            <Button
-              variant={filter === "completed" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilter("completed")}
-            >
+            <Button variant={filter === "completed" ? "default" : "outline"} size="sm" onClick={() => setFilter("completed")}>
               Completed
             </Button>
             <Button variant={filter === "high" ? "default" : "outline"} size="sm" onClick={() => setFilter("high")}>
@@ -121,34 +142,11 @@ export default function DashboardTasks() {
             <Card key={task.id} className={task.status === "completed" ? "opacity-70" : ""}>
               <CardHeader className="pb-2">
                 <div className="flex items-start gap-2">
-                  <Checkbox
-                    id={`task-${task.id}`}
-                    checked={task.status === "completed"}
-                    onCheckedChange={() => toggleTaskStatus(task.id)}
-                    className="mt-1"
-                  />
+                  <Checkbox checked={task.status === "completed"} onCheckedChange={() => toggleTaskStatus(task.id)} />
                   <div className="flex-1">
-                    <div className="flex justify-between items-start">
-                      <CardTitle
-                        className={`text-lg ${task.status === "completed" ? "line-through text-muted-foreground" : ""}`}
-                      >
-                        {task.title}
-                      </CardTitle>
-                      <div className="flex gap-2">
-                        <Badge
-                          variant={
-                            task.priority === "high"
-                              ? "destructive"
-                              : task.priority === "medium"
-                                ? "default"
-                                : "secondary"
-                          }
-                        >
-                          {task.priority}
-                        </Badge>
-                        <Badge variant={task.status === "completed" ? "outline" : "secondary"}>{task.status}</Badge>
-                      </div>
-                    </div>
+                    <CardTitle className={task.status === "completed" ? "line-through text-muted-foreground" : ""}>
+                      {task.title}
+                    </CardTitle>
                     <CardDescription>
                       {task.club} • {task.event}
                     </CardDescription>
@@ -173,7 +171,33 @@ export default function DashboardTasks() {
           ))}
         </div>
       )}
+
+      <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create New Task</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Input placeholder="Title" value={newTask.title} onChange={(e) => setNewTask({ ...newTask, title: e.target.value })} />
+            <Textarea placeholder="Description" value={newTask.description} onChange={(e) => setNewTask({ ...newTask, description: e.target.value })} />
+            <Input type="date" value={newTask.dueDate} onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })} />
+            <Input placeholder="Event" value={newTask.event} onChange={(e) => setNewTask({ ...newTask, event: e.target.value })} />
+            <Input placeholder="Club" value={newTask.club} onChange={(e) => setNewTask({ ...newTask, club: e.target.value })} />
+            <Select value={newTask.priority} onValueChange={(value) => setNewTask({ ...newTask, priority: value })}>
+              <SelectTrigger><SelectValue placeholder="Priority" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="high">High</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="low">Low</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCreateDialogClose}>Cancel</Button>
+            <Button onClick={handleCreateTask}>Create Task</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
-
