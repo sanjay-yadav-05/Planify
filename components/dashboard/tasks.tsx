@@ -161,7 +161,8 @@ export default function DashboardTasks() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Link href={`/tasks/${task.id}`}>
+                {/* <Link href={`/tasks/${task.id}`}> */}
+                <Link href={`/tasks/67e9725affeb660ab144ea29`}>
                   <Button variant="outline" size="sm">
                     View Details
                   </Button>

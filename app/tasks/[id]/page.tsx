@@ -145,7 +145,8 @@ export default function TaskDetailPage() {
                   </div>
                 </div>
                 <CardDescription>
-                  {task.club?.name} • {task.event?.name}
+                  {/* {task.club?.name} • {task.event?.name} */}
+                  {task.club} • {task.event}
                 </CardDescription>
               </div>
             </div>
@@ -162,7 +163,8 @@ export default function TaskDetailPage() {
               </div>
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4 text-muted-foreground" />
-                <span>Assigned to: {task.assignee?.name}</span>
+                {/* <span>Assigned to: {task.assignee?.name}</span> */}
+                <span>Assigned to: {task.assignee}</span>
               </div>
             </div>
           </CardContent>
