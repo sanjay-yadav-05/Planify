@@ -69,7 +69,7 @@ export default function Header() {
             </SheetContent>
           </Sheet>
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold">CommunityHub</span>
+            <span className="text-3xl font-mono font-bold">Planify</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <Link href="/events" className="font-medium transition-colors hover:text-primary">
