@@ -8,7 +8,7 @@ Follow these steps to set up the project locally:
 
 ```sh
 # Clone the repository
-git clone -b new-refactored-branch --single-branch https://github.com/your-username/your-repo.git
+git clone -b new-refactored-branch --single-branch https://github.com/sanjay-yadav-05/Planify.git
 cd Planify
 
 # Install dependencies
