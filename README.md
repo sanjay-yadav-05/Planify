@@ -6,13 +6,18 @@ Planify: Community & Event Platform. A full-stack platform for managing communit
 
 Follow these steps to set up the project locally:
 
+## Clone the repository
 ```sh
-# Clone the repository
 git clone -b new-refactored-branch --single-branch https://github.com/sanjay-yadav-05/Planify.git
 cd Planify
+```
 
-# Install dependencies
+## Install dependencies
+```sh
  npm install --legacy-peer-deps
+```
 
-# Run the project
+## Run the project
+```sh
 npm run dev
+```
